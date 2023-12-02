@@ -26,20 +26,20 @@ def str_to_num(istr: str) -> int:
             raise ValueError("Invalid Input")
 
 
-def task1(data: list[str]):
+def task1(data: list[str]) -> int:
     filtered = [re.sub(r"\D", "", entry) for entry in data]
     numbers = [int(entry[0]) * 10 + int(entry[-1]) for entry in filtered]
-    print("Task 01:", sum(numbers))
+    return sum(numbers)
 
 
-def task2(data: list[str]):
+def task2(data: list[str]) -> int:
     pattern = r"(?=(\d|one|two|three|four|five|six|seven|eight|nine))"
     tokens = [re.findall(pattern, entry) for entry in data]
     numbers = [str_to_num(entry[0]) * 10 + str_to_num(entry[-1]) for entry in tokens]
-    print("Task 02:", sum(numbers))
+    return sum(numbers)
 
 
 if __name__ == "__main__":
     data = get_data("../data/Day01.txt")
-    task1(data)
-    task2(data)
+    print("Task 01:", task1(data))
+    print("Task 02:", task2(data))

@@ -56,7 +56,11 @@ def task_02(lines: list[str]):
     return output
 
 
-if __name__ == "__main__":
+def main():
     lines = get_data("../data/Day02.txt")
     print("Task 01: ", task_01(lines))
     print("Task 02: ", task_02(lines))
+
+
+if __name__ == "__main__":
+    main()

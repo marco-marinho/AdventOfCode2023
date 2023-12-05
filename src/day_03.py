@@ -71,7 +71,7 @@ def task_02(numbers: list[Number], gears: list[(int, int)]):
     return acc
 
 
-if __name__ == "__main__":
+def main():
     board = get_board("../data/Day03.txt")
     data = get_data("../data/Day03.txt")
 
@@ -81,3 +81,7 @@ if __name__ == "__main__":
 
     print("Task 01: ", task_01(numbers, symbols))
     print("Task 02: ", task_02(numbers, symbols))
+
+
+if __name__ == "__main__":
+    main()

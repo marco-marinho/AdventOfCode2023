@@ -39,7 +39,11 @@ def task2(data: list[str]) -> int:
     return sum(numbers)
 
 
-if __name__ == "__main__":
+def main():
     data = get_data("../data/Day01.txt")
     print("Task 01:", task1(data))
     print("Task 02:", task2(data))
+
+
+if __name__ == "__main__":
+    main()

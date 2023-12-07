@@ -47,6 +47,11 @@ class Range:
             return self.dest + diff
         return -1
 
+    def get_intersection(self, other: Slice):
+        result, reminder = Slice(self.source, self.source + self.size - 1).get_intersection(other)
+        result = [entry.offset(self.size) for entry in result]
+        return result, reminder
+
 
 def parse_chunk(ilist):
     return list(itertools.batched([int(num) for entry in ilist[1:] for num in entry.split()], 3))

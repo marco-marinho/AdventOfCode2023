@@ -1,7 +1,38 @@
-import re
 import itertools
+import re
 from dataclasses import dataclass
+from typing import Self
+
 from util import get_data
+
+
+class Slice:
+
+    def __init__(self, start: int, end: int) -> None:
+        self.start = start
+        self.end = end
+
+    def offset(self, offset) -> Self:
+        return Slice(self.start + offset, self.end + offset)
+
+    def get_intersection(self, other: Self):
+        start = max(self.start, other.start)
+        end = min(self.end, other.end)
+
+        if start > end:
+            return [], [other]
+        elif other.start > self.start and other.end < self.end:
+            return [Slice(other.start, other.end - 1)], [Slice(self.start, other.start - 1),
+                                                         Slice(other.end + 1, self.end)]
+        elif other.start <= self.start <= other.end:
+            return [Slice(self.start, other.end)], [Slice(other.start, self.start - 1)]
+        elif other.start <= self.end <= other.end:
+            return [Slice(other.start, self.end)], [Slice(self.end + 1, other.end)]
+        else:
+            raise ValueError("Invalid slice")
+
+    def __repr__(self):
+        return f"Slice({self.start}, {self.end})"
 
 
 @dataclass(slots=True)
@@ -30,7 +61,6 @@ def parse_data():
     maps = [[] for _ in range(7)]
     for idx, part in enumerate(parsed):
         for entry in part:
-            # noinspection PyTypeChecker
             maps[idx].append(Range(*entry))
     return seeds, maps
 
@@ -52,6 +82,11 @@ def task_01():
 
 def main():
     print("Task 01: ", task_01())
+
+    alpha = Slice(10, 100)
+    beta = Slice(120, 130)
+    a, b = alpha.get_intersection(beta)
+    print(a, b)
 
 
 if __name__ == "__main__":

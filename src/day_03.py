@@ -16,7 +16,9 @@ class Number:
     def check_valid(self, symbols: list[(int, int)]) -> bool:
         for symbol in symbols:
             s_row, s_col = symbol
-            if (self.row - 1 <= s_row <= self.row + 1) and (self.col - 1 <= s_col <= self.col + self.size):
+            if (self.row - 1 <= s_row <= self.row + 1) and (
+                self.col - 1 <= s_col <= self.col + self.size
+            ):
                 return True
         return False
 
@@ -26,7 +28,9 @@ def find_numbers(data: list[str]) -> list[Number]:
     output = []
     for row, line in enumerate(data):
         for match in re.finditer(pattern, line):
-            number = Number(int(match.group()), row + 1, match.start() + 1, len(match.group()))
+            number = Number(
+                int(match.group()), row + 1, match.start() + 1, len(match.group())
+            )
             output.append(number)
     return output
 

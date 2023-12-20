@@ -29,12 +29,14 @@ class GameEntry:
 def parse_line(istr: str):
     parts = istr.split(":")
     game_id = int(parts[0].replace("Game ", ""))
-    entries = [part for entry in parts[1].split(";")
-               for part in [entry.strip().split(", ")]]
+    entries = [
+        part for entry in parts[1].split(";") for part in [entry.strip().split(", ")]
+    ]
     olist = []
     for entry in entries:
-        olist.append({part[1]: int(part[0]) for val in entry
-                      for part in [val.split(" ")]})
+        olist.append(
+            {part[1]: int(part[0]) for val in entry for part in [val.split(" ")]}
+        )
     return GameEntry(game_id, olist)
 
 

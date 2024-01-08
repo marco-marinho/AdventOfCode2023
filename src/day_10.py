@@ -11,6 +11,10 @@ links = {"|": {Point(-1, 0), Point(1, 0)},
          "S": {Point(1, 0), Point(-1, 0), Point(0, 1), Point(0, -1)}}
 
 
+def det(p1: Point, p2: Point) -> int:
+    return p1.x * p2.y - p1.y * p2.x
+
+
 def find_start(idata: list[str]):
     line = next(i for i, v in enumerate(idata) if "S" in v)
     col = idata[line].index("S")
@@ -29,16 +33,19 @@ def step(idata: list[str], pos: Point, direction: Point):
     return next_pos, next_direction
 
 
-def loop_len(idata: list[str], start_pos: Point, start_direction: Point):
+def get_loop(idata: list[str], start_pos: Point, start_direction: Point):
     pos = copy(start_pos)
     direction = copy(start_direction)
     visited = set()
+    edges = []
     while pos is not None and pos not in visited:
         visited.add(pos)
+        if idata[pos.x][pos.y] in ["S", "J", "F", "7", "L"]:
+            edges.append(pos)
         pos, direction = step(idata, pos, direction)
     if pos is None or pos != start_pos:
-        return -1
-    return len(visited)
+        return set(), edges
+    return visited, edges
 
 
 if __name__ == "__main__":
@@ -46,7 +53,15 @@ if __name__ == "__main__":
     start_pos = Point.from_iterable(find_start(data))
     directions = [Point(0, 1), Point(0, -1), Point(-1, 0), Point(1, 0)]
     for direction in directions:
-        size = loop_len(data, start_pos, direction)
-        if size != -1:
-            print(size//2)
+        coords, edges = get_loop(data, start_pos, direction)
+        if len(coords) > 0:
+            b = len(coords) // 2
+            print("Task 01:", b)
+            edges.append(edges[0])
+            A2 = 0
+            for i in range(len(edges) - 1):
+                A2 += det(edges[i], edges[i + 1])
+            i = abs(A2)//2 - b + 1
+            print("Task 02:", i)
             break
+

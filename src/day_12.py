@@ -8,33 +8,25 @@ def parse_solution(solution: str) -> list[int]:
 
 @lru_cache(maxsize=None)
 def solve(puzzle: str, solutions: tuple[int], blocked: bool):
-    if puzzle == "":
-        if len(solutions) == 0:
-            return 1
-        return 0
-    if len(solutions) == 0:
-        if "#" not in puzzle:
-            return 1
-        return 0
-    if solutions[0] > len(puzzle):
+    solved = len(solutions) == 0
+    if solved and "#" not in puzzle:
+        return 1
+    if (solved and "#" in puzzle) or solutions[0] > len(puzzle):
         return 0
 
-    if puzzle[0] == "#":
-        if blocked:
+    match (puzzle[0], blocked):
+        case "#", True:
             return 0
-        else:
+        case "#", False:
             if '.' not in puzzle[:solutions[0]]:
                 return solve(puzzle[solutions[0]:], solutions[1:], True)
             else:
                 return 0
-
-    if puzzle[0] == ".":
-        return solve(puzzle[1:], solutions, False)
-
-    if puzzle[0] == "?":
-        if blocked:
+        case ".", _:
             return solve(puzzle[1:], solutions, False)
-        else:
+        case "?", True:
+            return solve(puzzle[1:], solutions, False)
+        case "?", False:
             acc = 0
             if '.' not in puzzle[:solutions[0]]:
                 acc += solve(puzzle[solutions[0]:], solutions[1:], True)

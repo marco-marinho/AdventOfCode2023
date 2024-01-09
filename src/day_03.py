@@ -35,7 +35,7 @@ def find_numbers(data: list[str]) -> list[Number]:
     return output
 
 
-def find_symbols(board: np.ndarray[str]) -> list[(int, int)]:
+def find_symbols(board: np.ndarray) -> list[(int, int)]:
     rows, cols = board.shape
     output = []
     for row in range(1, rows - 1):
@@ -45,7 +45,7 @@ def find_symbols(board: np.ndarray[str]) -> list[(int, int)]:
     return output
 
 
-def find_gears(board: np.ndarray[str]) -> list[(int, int)]:
+def find_gears(board: np.ndarray) -> list[(int, int)]:
     rows, cols = board.shape
     output = []
     for row in range(1, rows - 1):
@@ -81,7 +81,6 @@ def main():
 
     symbols = find_symbols(board)
     numbers = find_numbers(data)
-    gears = find_gears(board)
 
     print("Task 01: ", task_01(numbers, symbols))
     print("Task 02: ", task_02(numbers, symbols))

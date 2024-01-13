@@ -43,16 +43,16 @@ def task_02(data):
     cdata = data.copy()
     seen = {}
     target = 1000000000
-    cycle_len = 0
+    repeat_len = 0
     i = 0
 
     while i < target:
         cycle(cdata)
         i += 1
-        if cycle_len == 0 and cdata.data.tobytes() in seen:
-            cycle_length = i - seen[cdata.data.tobytes()]
-            i += cycle_length * ((target - i) // cycle_length)
-        else:
+        if repeat_len == 0 and cdata.data.tobytes() in seen:
+            repeat_len = i - seen[cdata.data.tobytes()]
+            i += repeat_len * ((target - i) // repeat_len)
+        elif repeat_len == 0:
             seen[cdata.data.tobytes()] = i
     return calc_load(cdata)
 

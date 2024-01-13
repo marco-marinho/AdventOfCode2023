@@ -2,13 +2,15 @@ from copy import copy
 
 from util import get_data, Point
 
-links = {"|": {Point(-1, 0), Point(1, 0)},
-         "-": {Point(0, -1), Point(0, 1)},
-         "L": {Point(-1, 0), Point(0, 1)},
-         "7": {Point(0, -1), Point(1, 0)},
-         "J": {Point(-1, 0), Point(0, -1)},
-         "F": {Point(1, 0), Point(0, 1)},
-         "S": {Point(1, 0), Point(-1, 0), Point(0, 1), Point(0, -1)}}
+links = {
+    "|": {Point(-1, 0), Point(1, 0)},
+    "-": {Point(0, -1), Point(0, 1)},
+    "L": {Point(-1, 0), Point(0, 1)},
+    "7": {Point(0, -1), Point(1, 0)},
+    "J": {Point(-1, 0), Point(0, -1)},
+    "F": {Point(1, 0), Point(0, 1)},
+    "S": {Point(1, 0), Point(-1, 0), Point(0, 1), Point(0, -1)},
+}
 
 
 def det(p1: Point, p2: Point) -> int:
@@ -61,7 +63,6 @@ if __name__ == "__main__":
             A2 = 0
             for i in range(len(edges) - 1):
                 A2 += det(edges[i], edges[i + 1])
-            i = abs(A2)//2 - b + 1
+            i = abs(A2) // 2 - b + 1
             print("Task 02:", i)
             break
-

@@ -26,8 +26,13 @@ def get_points(block: NDArray[int], max_residual: int = 0) -> int:
 
 if __name__ == "__main__":
     data = get_data("../data/Day13.txt")
-    blocks = [np.array([list(b.replace(".", "0").replace("#", "1")) for b in block], dtype=np.int8)
-              for k, block in groupby(data, lambda x: x == "") if not k]
+    blocks = [
+        np.array(
+            [list(b.replace(".", "0").replace("#", "1")) for b in block], dtype=np.int8
+        )
+        for k, block in groupby(data, lambda x: x == "")
+        if not k
+    ]
     points_1 = sum(get_points(block, 0) for block in blocks)
     points_2 = sum(get_points(block, 1) for block in blocks)
     print("Task 1:", points_1)

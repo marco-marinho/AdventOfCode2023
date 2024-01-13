@@ -3,7 +3,7 @@ from functools import lru_cache
 
 
 def parse_solution(solution: str) -> list[int]:
-    return list(map(int, solution.split(',')))
+    return list(map(int, solution.split(",")))
 
 
 @lru_cache(maxsize=None)
@@ -18,8 +18,8 @@ def solve(puzzle: str, solutions: tuple[int], blocked: bool) -> int:
         case "#", True:
             return 0
         case "#", False:
-            if '.' not in puzzle[:solutions[0]]:
-                return solve(puzzle[solutions[0]:], solutions[1:], True)
+            if "." not in puzzle[: solutions[0]]:
+                return solve(puzzle[solutions[0] :], solutions[1:], True)
             else:
                 return 0
         case ".", _:
@@ -28,16 +28,15 @@ def solve(puzzle: str, solutions: tuple[int], blocked: bool) -> int:
             return solve(puzzle[1:], solutions, False)
         case "?", False:
             acc = 0
-            if '.' not in puzzle[:solutions[0]]:
-                acc += solve(puzzle[solutions[0]:], solutions[1:], True)
+            if "." not in puzzle[: solutions[0]]:
+                acc += solve(puzzle[solutions[0] :], solutions[1:], True)
             acc += solve(puzzle[1:], solutions, False)
             return acc
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     data = util.get_data("../data/Day12.txt")
-    puzzles, solutions = zip(*[parts for line in data
-                               for parts in [line.split(" ")]])
+    puzzles, solutions = zip(*[parts for line in data for parts in [line.split(" ")]])
     solutions = list(map(parse_solution, solutions))
 
     acc = 0

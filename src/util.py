@@ -1,5 +1,4 @@
 from typing import Any, Self, Iterable
-from dataclasses import dataclass
 
 import numpy as np
 from numpy import ndarray, dtype
@@ -20,16 +19,22 @@ def get_board(ipath: str) -> ndarray[Any, dtype[str]]:
         return oboard
 
 
-@dataclass(frozen=True)
 class Point:
-    x: int
-    y: int
+    __slots__ = ("x", "y")
+    __match_args__ = ("x", "y")
+
+    def __init__(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
 
     def __add__(self, other: Self) -> Self:
         return Point(self.x + other.x, self.y + other.y)
 
     def __eq__(self, other) -> bool:
         return self.x == other.x and self.y == other.y
+
+    def __hash__(self) -> int:
+        return hash((self.x, self.y))
 
     def reversed(self) -> Self:
         return Point(-self.x, -self.y)

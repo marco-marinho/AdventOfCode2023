@@ -7,7 +7,7 @@ def parse_solution(solution: str) -> list[int]:
 
 
 @lru_cache(maxsize=None)
-def solve(puzzle: str, solutions: tuple[int], blocked: bool):
+def solve(puzzle: str, solutions: tuple[int], blocked: bool) -> int:
     solved = len(solutions) == 0
     if solved and "#" not in puzzle:
         return 1

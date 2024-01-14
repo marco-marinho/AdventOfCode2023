@@ -23,9 +23,7 @@ CARD_STR = {
 
 def parse():
     data = get_data("../data/Day07.txt")
-    hands, bets = zip(
-        *[(line[0], line[1]) for entry in data for line in [entry.split(" ")]]
-    )
+    hands, bets = zip(*[(line[0], line[1]) for entry in data for line in [entry.split(" ")]])
     return hands, bets
 
 
@@ -69,9 +67,7 @@ def task(task_num: int):
     hands, bets = parse()
     parsed_hands = [parse_hand(hand, task_num) for hand in hands]
     order = np.argsort(parsed_hands)
-    score = [
-        int(i[0]) * i[1] for i in zip(reorder(bets, order), range(1, len(bets) + 1))
-    ]
+    score = [int(i[0]) * i[1] for i in zip(reorder(bets, order), range(1, len(bets) + 1))]
     return sum(score)
 
 

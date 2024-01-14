@@ -8,20 +8,13 @@ from util import get_data
 
 def parse_01() -> list[list[[int]]]:
     data = get_data("../data/Day06.txt")
-    parsed = [
-        list(map(int, entry))
-        for line in data
-        for entry in [re.sub(" +", " ", line).split(" ")[1:]]
-    ]
+    parsed = [list(map(int, entry)) for line in data for entry in [re.sub(" +", " ", line).split(" ")[1:]]]
     return parsed
 
 
 def parse_02() -> list[int]:
     data = get_data("../data/Day06.txt")
-    parsed = [
-        reduce(lambda a, b: a + b, re.sub(" +", " ", line).split(" ")[1:])
-        for line in data
-    ]
+    parsed = [reduce(lambda a, b: a + b, re.sub(" +", " ", line).split(" ")[1:]) for line in data]
     return list(map(int, parsed))
 
 

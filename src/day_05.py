@@ -47,27 +47,19 @@ class Range:
         return -1
 
     def get_intersection(self, other: Slice) -> tuple[list[Self], list[Self]]:
-        result, reminder = Slice(
-            self.source, self.source + self.size - 1
-        ).get_intersection(other)
+        result, reminder = Slice(self.source, self.source + self.size - 1).get_intersection(other)
         result = [entry.offset(self.dest - self.source) for entry in result]
         return result, reminder
 
 
 def parse_chunk(ilist):
-    return list(
-        itertools.batched([int(num) for entry in ilist[1:] for num in entry.split()], 3)
-    )
+    return list(itertools.batched([int(num) for entry in ilist[1:] for num in entry.split()], 3))
 
 
 def parse_data():
     data = get_data("../data/Day05.txt")
     seeds = [int(piece) for piece in re.sub(r"[a-z]|:", "", data[0]).strip().split(" ")]
-    chunks = [
-        list(group)
-        for k, group in itertools.groupby(data[1:], lambda x: x == "")
-        if not k
-    ]
+    chunks = [list(group) for k, group in itertools.groupby(data[1:], lambda x: x == "") if not k]
     parsed = [parse_chunk(chunk) for chunk in chunks]
     maps = [[] for _ in range(7)]
     for idx, part in enumerate(parsed):

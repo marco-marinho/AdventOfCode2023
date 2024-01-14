@@ -8,12 +8,7 @@ def get_intersection(data: list[str]):
         mine = {int(entry) for entry in re.sub(" +", " ", second.strip()).split(" ")}
         return len(win.intersection(mine))
 
-    split = [
-        _get_intersection(*part)
-        for line in data
-        for entry in [line.split(":")]
-        for part in [entry[1].split("|")]
-    ]
+    split = [_get_intersection(*part) for line in data for entry in [line.split(":")] for part in [entry[1].split("|")]]
     return split
 
 

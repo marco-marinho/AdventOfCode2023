@@ -19,11 +19,7 @@ def task_2(data: list[str]) -> int:
             boxes[hash_str(entry[:-1])].pop(entry[:-1], None)
         else:
             boxes[hash_str(entry[:-2])][entry[:-2]] = int(entry[-1])
-    return sum(
-        (key + 1) * (idx + 1) * val
-        for key in boxes
-        for idx, val in enumerate(boxes[key].values())
-    )
+    return sum((key + 1) * (idx + 1) * val for key in boxes for idx, val in enumerate(boxes[key].values()))
 
 
 if __name__ == "__main__":

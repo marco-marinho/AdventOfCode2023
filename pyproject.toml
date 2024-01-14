@@ -3,3 +3,5 @@ dependencies = [
     "numpy",
     "numba"
 ]
+[tool.black]
+line-length = 120

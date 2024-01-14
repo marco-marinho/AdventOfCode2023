@@ -23,10 +23,7 @@ def move(data):
 
 
 def calc_load(data):
-    return sum(
-        np.count_nonzero(row == b"O") * (data.shape[0] - i)
-        for i, row in enumerate(data)
-    )
+    return sum(np.count_nonzero(row == b"O") * (data.shape[0] - i) for i, row in enumerate(data))
 
 
 def cycle(data):

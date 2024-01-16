@@ -16,7 +16,7 @@ def dijkstras(board: np.array, min: int, max: int):
     queue = []
     heappush(queue, (board[0, 1], ((0, 1), b"r", 1)))
     heappush(queue, (board[1, 0], ((1, 0), b"d", 1)))
-    movements = [((-1, 0), b"d"), ((0, 1), b"r"), ((1, 0), b"u"), ((0, -1), b"l")]
+    movements = (((-1, 0), b"d"), ((0, 1), b"r"), ((1, 0), b"u"), ((0, -1), b"l"))
     visited = set()
     while len(queue) > 0:
         cost, state = heappop(queue)
@@ -45,7 +45,7 @@ def dijkstras(board: np.array, min: int, max: int):
 if __name__ == "__main__":
     data = get_data("../data/Day17.txt")
     board = np.array([list(line) for line in data], dtype=int)
-    with mp.Pool(mp.cpu_count()) as p:
+    with mp.Pool(2) as p:
         result = p.starmap(dijkstras, [(board, 1, 3), (board, 4, 10)])
     print("Task 01:", result[0])
     print("Task 02:", result[1])

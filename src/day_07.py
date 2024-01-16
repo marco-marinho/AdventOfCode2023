@@ -20,6 +20,16 @@ CARD_STR = {
     "A": 14,
 }
 
+HAND_STR: dict[tuple, int] = {
+    (5,): 6,
+    (4, 1): 5,
+    (3, 2): 4,
+    (3, 1, 1): 3,
+    (2, 2, 1): 2,
+    (2, 1, 1, 1): 1,
+    (1, 1, 1, 1, 1): 0,
+}
+
 
 def parse():
     data = get_data("../data/Day07.txt")
@@ -30,15 +40,6 @@ def parse():
 def parse_hand(hand: str, task_num: int = 1):
     if task_num == 2:
         CARD_STR["J"] = 1
-    hand_str: dict[tuple, int] = {
-        (5,): 6,
-        (4, 1): 5,
-        (3, 2): 4,
-        (3, 1, 1): 3,
-        (2, 2, 1): 2,
-        (2, 1, 1, 1): 1,
-        (1, 1, 1, 1, 1): 0,
-    }
     counts = defaultdict(lambda: 0)
     offset = 1e8
     score = 0
@@ -55,7 +56,7 @@ def parse_hand(hand: str, task_num: int = 1):
         hand_key[0] += jokers
     else:
         hand_key = [5]
-    score += hand_str[tuple(hand_key)] * 1e10
+    score += HAND_STR[tuple(hand_key)] * 1e10
     return score
 
 

@@ -22,25 +22,22 @@ def travel(tree: dict[str, Node]):
     accept = []
     while len(queue) > 0:
         node_name, state = queue.pop()
-        match node_name:
-            case "A":
+        if node_name in ["A", "R"]:
+            if node_name == "A":
                 accept.append(state)
-                continue
-            case "R":
-                continue
+            continue
         node = tree[node_name]
         f_state = list(state)
         for idx, condition, value, dest in node.branches:
             c_state = f_state.copy()
             start = c_state[idx].start
             end = c_state[idx].stop
-            match condition:
-                case "<":
-                    c_state[idx] = range(start, value)
-                    f_state[idx] = range(value, end)
-                case ">":
-                    c_state[idx] = range(value + 1, end)
-                    f_state[idx] = range(start, value + 1)
+            if condition == "<":
+                c_state[idx] = range(start, value)
+                f_state[idx] = range(value, end)
+            else:
+                c_state[idx] = range(value + 1, end)
+                f_state[idx] = range(start, value + 1)
             queue.append((dest, c_state))
         queue.append((node.final, f_state))
     return accept
@@ -64,7 +61,9 @@ if __name__ == "__main__":
     tree, entries = [list(entries) for k, entries in groupby(data, key=lambda x: x == "") if not k]
     tree = {entry[: entry.find("{")]: Node(entry) for entry in tree}
     entries = [
-        (int(x[3:]), int(m[2:]), int(a[2:]), int(s[2:-1])) for entry in entries for x, m, a, s in [entry.split(",")]
+        (int(x[3:]), int(m[2:]), int(a[2:]), int(s[2:-1]))
+        for entry in entries
+        for x, m, a, s in [entry.split(",")]
     ]
     accept = travel(tree)
     rating = sum(sum(entry) for entry in entries if valid(entry, accept))

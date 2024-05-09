@@ -13,13 +13,13 @@ def move(data):
             if buff[j] == b"O":
                 n += 1
             elif buff[j] == b"#":
-                buff[p : p + n] = b"O"
-                buff[p + n : j] = b"."
+                buff[p: p + n] = b"O"
+                buff[p + n: j] = b"."
                 p = j + 1
                 n = 0
         if n > 0:
-            buff[p : p + n] = b"O"
-            buff[p + n :] = b"."
+            buff[p: p + n] = b"O"
+            buff[p + n:] = b"."
 
 
 def calc_load(data):

@@ -1,14 +1,18 @@
 from heapq import heappush, heappop
 import multiprocessing as mp
+import concurrent.futures
+from multiprocessing.pool import ThreadPool
 
 import numpy as np
 
 from util import get_data
+from day17_pybind import native_djikstras
 
 
 def are_inverse(a, b):
     return (
-        (a == b"r" and b == b"l") or (a == b"l" and b == b"r") or (a == b"u" and b == b"d") or (a == b"d" and b == b"u")
+            (a == b"r" and b == b"l") or (a == b"l" and b == b"r") or
+            (a == b"u" and b == b"d") or (a == b"d" and b == b"u")
     )
 
 
@@ -29,13 +33,13 @@ def dijkstras(board: np.array, min: int, max: int):
             next_pos = (state[0][0] + movement[0][0], state[0][1] + movement[0][1])
             count = 1 if state[1] != movement[1] else state[2] + 1
             if (
-                (state[2] < min and state[1] != movement[1])
-                or are_inverse(state[1], movement[1])
-                or count > max
-                or next_pos[0] < 0
-                or next_pos[0] >= board.shape[0]
-                or next_pos[1] < 0
-                or next_pos[1] >= board.shape[1]
+                    (state[2] < min and state[1] != movement[1])
+                    or are_inverse(state[1], movement[1])
+                    or count > max
+                    or next_pos[0] < 0
+                    or next_pos[0] >= board.shape[0]
+                    or next_pos[1] < 0
+                    or next_pos[1] >= board.shape[1]
             ):
                 continue
             heappush(queue, (cost + board[next_pos[0], next_pos[1]], ((next_pos[0], next_pos[1]), movement[1], count)))
@@ -44,8 +48,10 @@ def dijkstras(board: np.array, min: int, max: int):
 
 if __name__ == "__main__":
     data = get_data("../data/Day17.txt")
-    board = np.array([list(line) for line in data], dtype=int)
-    with mp.Pool(2) as p:
-        result = p.starmap(dijkstras, [(board, 1, 3), (board, 4, 10)])
-    print("Task 01:", result[0])
-    print("Task 02:", result[1])
+    board = np.array([list(line) for line in data], dtype=np.uint64)
+    print("Task 01:", native_djikstras(board, 1, 3))
+    print("Task 02:", native_djikstras(board, 4, 10))
+    # with mp.Pool(2) as p:
+    #     result = p.starmap(djikstras, [(board, 1, 3), (board, 4, 10)])
+    # print("Task 01:", result[0])
+    # print("Task 02:", result[1])

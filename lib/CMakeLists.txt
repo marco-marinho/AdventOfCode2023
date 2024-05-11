@@ -3,7 +3,14 @@ cmake_minimum_required(VERSION 3.4...3.18)
 project(advent_lib)
 
 set(CMAKE_CXX_STANDARD 17)
+
+if (UNIX)
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+endif (UNIX)
+
+if (MSVC)
+set(CMAKE_CXX_FLAGS_RELEASE "/O2")
+endif (MSVC)
 
 add_subdirectory(extern/pybind11)
 

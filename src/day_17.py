@@ -12,38 +12,18 @@ except ImportError:
 from util import get_data
 
 
-def are_inverse(a, b):
-    return (
-            (a == b"r" and b == b"l") or (a == b"l" and b == b"r") or
-            (a == b"u" and b == b"d") or (a == b"d" and b == b"u")
-    )
-
-
-def to_int(ichar: bytes):
-    match ichar:
-        case b"r":
-            return 0
-        case b"l":
-            return 1
-        case b"u":
-            return 2
-        case b"d":
-            return 3
-        case _:
-            raise ValueError("Invalid input")
-
-
 def dijkstras(board: np.array, min: int, max: int):
     queue = []
-    heappush(queue, (board[0, 1], ((0, 1), b"r", 1)))
-    heappush(queue, (board[1, 0], ((1, 0), b"d", 1)))
-    movements = (((-1, 0), b"d"), ((0, 1), b"r"), ((1, 0), b"u"), ((0, -1), b"l"))
+    inverses = (3, 2, 1, 0)
+    heappush(queue, (board[0, 1], ((0, 1), 0, 1)))
+    heappush(queue, (board[1, 0], ((1, 0), 1, 1)))
+    movements = (((-1, 0), 2), ((0, 1), 0), ((1, 0), 1), ((0, -1), 3))
     visited = np.full((board.shape[0], board.shape[1], 4, max + 1), False)
     while len(queue) > 0:
         cost, state = heappop(queue)
-        if visited[state[0][0], state[0][1], to_int(state[1]), state[2]]:
+        if visited[state[0][0], state[0][1], state[1], state[2]]:
             continue
-        visited[state[0][0], state[0][1], to_int(state[1]), state[2]] = True
+        visited[state[0][0], state[0][1], state[1], state[2]] = True
         if state[0][0] == board.shape[0] - 1 and state[0][1] == board.shape[1] - 1 and state[2] >= min:
             return cost
         for movement in movements:
@@ -51,12 +31,13 @@ def dijkstras(board: np.array, min: int, max: int):
             count = 1 if state[1] != movement[1] else state[2] + 1
             if (
                     (state[2] < min and state[1] != movement[1])
-                    or are_inverse(state[1], movement[1])
+                    or inverses[state[1]] == movement[1]
                     or count > max
                     or next_pos[0] < 0
                     or next_pos[0] >= board.shape[0]
                     or next_pos[1] < 0
                     or next_pos[1] >= board.shape[1]
+                    or visited[next_pos[0], next_pos[1], movement[1], count]
             ):
                 continue
             heappush(queue, (cost + board[next_pos[0], next_pos[1]], ((next_pos[0], next_pos[1]), movement[1], count)))

@@ -3,3 +3,6 @@
 test/.pytest_cache
 .pytest_cache
 test/.benchmarks
+/build/
+src/native/*.so
+*/*/__pycache__

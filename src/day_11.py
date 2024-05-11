@@ -1,5 +1,6 @@
-from util import get_board
 from itertools import combinations
+
+from util import get_board
 
 
 def calculate_distance(rate):

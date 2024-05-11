@@ -1,12 +1,15 @@
 from heapq import heappush, heappop
-import multiprocessing as mp
-import concurrent.futures
-from multiprocessing.pool import ThreadPool
 
 import numpy as np
 
+try:
+    from native.day17_pybind import native_djikstras
+    native = True
+except ImportError:
+    import multiprocessing as mp
+    native = False
+
 from util import get_data
-from day17_pybind import native_djikstras
 
 
 def are_inverse(a, b):
@@ -14,6 +17,20 @@ def are_inverse(a, b):
             (a == b"r" and b == b"l") or (a == b"l" and b == b"r") or
             (a == b"u" and b == b"d") or (a == b"d" and b == b"u")
     )
+
+
+def to_int(ichar: bytes):
+    match ichar:
+        case b"r":
+            return 0
+        case b"l":
+            return 1
+        case b"u":
+            return 2
+        case b"d":
+            return 3
+        case _:
+            raise ValueError("Invalid input")
 
 
 def dijkstras(board: np.array, min: int, max: int):
@@ -49,9 +66,11 @@ def dijkstras(board: np.array, min: int, max: int):
 if __name__ == "__main__":
     data = get_data("../data/Day17.txt")
     board = np.array([list(line) for line in data], dtype=np.uint64)
-    print("Task 01:", native_djikstras(board, 1, 3))
-    print("Task 02:", native_djikstras(board, 4, 10))
-    # with mp.Pool(2) as p:
-    #     result = p.starmap(djikstras, [(board, 1, 3), (board, 4, 10)])
-    # print("Task 01:", result[0])
-    # print("Task 02:", result[1])
+    if native:
+        print("Task 01:", native_djikstras(board, 1, 3))
+        print("Task 02:", native_djikstras(board, 4, 10))
+    else:
+        with mp.Pool(2) as p:
+            result = p.starmap(dijkstras, [(board, 1, 3), (board, 4, 10)])
+        print("Task 01:", result[0])
+        print("Task 02:", result[1])

@@ -1,5 +1,5 @@
-from functools import reduce
 from collections import defaultdict
+from functools import reduce
 
 from util import get_data
 

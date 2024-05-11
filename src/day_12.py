@@ -1,5 +1,6 @@
-import util
 from functools import lru_cache
+
+import util
 
 
 def parse_solution(solution: str) -> list[int]:

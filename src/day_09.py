@@ -1,7 +1,5 @@
 from functools import reduce
 
-import numpy as np
-
 from util import get_data
 
 

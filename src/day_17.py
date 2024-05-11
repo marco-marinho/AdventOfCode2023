@@ -38,12 +38,12 @@ def dijkstras(board: np.array, min: int, max: int):
     heappush(queue, (board[0, 1], ((0, 1), b"r", 1)))
     heappush(queue, (board[1, 0], ((1, 0), b"d", 1)))
     movements = (((-1, 0), b"d"), ((0, 1), b"r"), ((1, 0), b"u"), ((0, -1), b"l"))
-    visited = set()
+    visited = np.full((board.shape[0], board.shape[1], 4, max + 1), False)
     while len(queue) > 0:
         cost, state = heappop(queue)
-        if state in visited:
+        if visited[state[0][0], state[0][1], to_int(state[1]), state[2]]:
             continue
-        visited.add(state)
+        visited[state[0][0], state[0][1], to_int(state[1]), state[2]] = True
         if state[0][0] == board.shape[0] - 1 and state[0][1] == board.shape[1] - 1 and state[2] >= min:
             return cost
         for movement in movements:

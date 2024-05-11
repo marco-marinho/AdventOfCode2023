@@ -7,7 +7,7 @@ CHART_TO_INT = {"x": 0, "m": 1, "a": 2, "s": 3}
 
 class Node:
     def __init__(self, istr):
-        istr = istr[istr.find("{") + 1 :]
+        istr = istr[istr.find("{") + 1:]
         pieces = istr.split(",")
         self.final = pieces[-1][:-1]
         self.branches = [

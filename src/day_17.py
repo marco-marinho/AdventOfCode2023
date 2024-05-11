@@ -12,35 +12,35 @@ except ImportError:
 from util import get_data
 
 
-def dijkstras(board: np.array, min: int, max: int):
+def dijkstras(iboard: np.array, imin: int, imax: int):
     queue = []
     inverses = (3, 2, 1, 0)
-    heappush(queue, (board[0, 1], ((0, 1), 0, 1)))
-    heappush(queue, (board[1, 0], ((1, 0), 1, 1)))
+    heappush(queue, (iboard[0, 1], ((0, 1), 0, 1)))
+    heappush(queue, (iboard[1, 0], ((1, 0), 1, 1)))
     movements = (((-1, 0), 2), ((0, 1), 0), ((1, 0), 1), ((0, -1), 3))
-    visited = np.full((board.shape[0], board.shape[1], 4, max + 1), False)
+    visited = np.full((iboard.shape[0], iboard.shape[1], 4, imax + 1), False)
     while len(queue) > 0:
         cost, state = heappop(queue)
         if visited[state[0][0], state[0][1], state[1], state[2]]:
             continue
         visited[state[0][0], state[0][1], state[1], state[2]] = True
-        if state[0][0] == board.shape[0] - 1 and state[0][1] == board.shape[1] - 1 and state[2] >= min:
+        if state[0][0] == iboard.shape[0] - 1 and state[0][1] == iboard.shape[1] - 1 and state[2] >= imin:
             return cost
         for movement in movements:
             next_pos = (state[0][0] + movement[0][0], state[0][1] + movement[0][1])
             count = 1 if state[1] != movement[1] else state[2] + 1
             if (
-                    (state[2] < min and state[1] != movement[1])
+                    (state[2] < imin and state[1] != movement[1])
                     or inverses[state[1]] == movement[1]
-                    or count > max
+                    or count > imax
                     or next_pos[0] < 0
-                    or next_pos[0] >= board.shape[0]
+                    or next_pos[0] >= iboard.shape[0]
                     or next_pos[1] < 0
-                    or next_pos[1] >= board.shape[1]
+                    or next_pos[1] >= iboard.shape[1]
                     or visited[next_pos[0], next_pos[1], movement[1], count]
             ):
                 continue
-            heappush(queue, (cost + board[next_pos[0], next_pos[1]], ((next_pos[0], next_pos[1]), movement[1], count)))
+            heappush(queue, (cost + iboard[next_pos[0], next_pos[1]], ((next_pos[0], next_pos[1]), movement[1], count)))
     return -1
 
 

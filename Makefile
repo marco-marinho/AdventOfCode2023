@@ -19,4 +19,4 @@ endif
 clean:
 	rm -fr build
 	rm -f src/native/*.so src/native/*.pyd
-	rm lib/day21/day21_cffi.*
+	rm -f lib/day21/day21_cffi.*

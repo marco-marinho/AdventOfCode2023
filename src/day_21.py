@@ -2,11 +2,13 @@ import numpy as np
 from numba import jit
 
 from util import get_data
+
 try:
     from native.day21_cffi import lib, ffi
     native = True
 except ImportError:
     native = False
+
 
 def parse_to_int(ichar: str):
     match ichar:
@@ -43,9 +45,9 @@ if __name__ == "__main__":
     if native:
         bptr = ffi.cast("uint32_t *", ffi.from_buffer(board))
         optr = ffi.cast("uint32_t *", ffi.from_buffer(oboard))
-        results = np.zeros(65+131*2, dtype=np.uint32)
+        results = np.zeros(65 + 131 * 2, dtype=np.uint32)
         rptr = ffi.cast("uint32_t *", ffi.from_buffer(results))
-        lib.day21_step(bptr, optr, board.shape[0], board.shape[1], 65+131*2, rptr)
+        lib.day21_step(bptr, optr, board.shape[0], board.shape[1], 65 + 131 * 2, rptr)
     else:
         results = step(board, oboard, 65 + 131 * 2)
 

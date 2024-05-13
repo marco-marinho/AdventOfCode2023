@@ -6,3 +6,5 @@ test/.benchmarks
 /build/
 src/native/*.so
 */*/__pycache__
+lib/cmake-build-debug
+lib/cmake-build-release

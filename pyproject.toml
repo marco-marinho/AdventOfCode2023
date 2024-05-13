@@ -1,4 +1,6 @@
 [project]
+name = "AOC2023"
+dynamic = ["version"]
 dependencies = [
     "numpy",
     "numba"

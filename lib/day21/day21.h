@@ -1,0 +1,1 @@
+ day21_step(uint32_t *iboard, uint32_t *oboard, int rows, int cols, int nsteps, uint32_t *results);

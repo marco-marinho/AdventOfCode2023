@@ -15,6 +15,7 @@ def get_libs(lib_folders):
                 libs.append(file.stem.removeprefix("lib"))
     return libs
 
+
 def get_headers(header_folders):
     headers = ""
     for folder in map(Path, header_folders):
@@ -22,6 +23,7 @@ def get_headers(header_folders):
             if not file.name.startswith("cdef") and file.suffix == ".h":
                 headers += f'#include "{file.name}" \n'
     return headers
+
 
 def get_cdefs(cdefs_folders):
     cdef = ""
@@ -31,10 +33,11 @@ def get_cdefs(cdefs_folders):
                 cdef += open(file, encoding="utf8").read()
     return cdef
 
+
 if __name__ == "__main__":
 
-    if '.abi3.so' in importlib.machinery.EXTENSION_SUFFIXES:
-        suffix = '.abi3.so'
+    if '.so' in importlib.machinery.EXTENSION_SUFFIXES:
+        suffix = '.so'
     elif '.pyd' in importlib.machinery.EXTENSION_SUFFIXES:
         suffix = '.pyd'
     else:

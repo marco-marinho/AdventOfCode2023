@@ -7,12 +7,8 @@ ifeq ($(OS),Windows_NT)
 	cmake -G "Visual Studio 17 2022" -B build lib
 	cmake --build build --config Release --target install
 else
-	cmake -G Ninja -Bbuild lib
-	cmake --build build --config Release
-	cp build/day17_pybind.cpython-*-x86_64-linux-gnu.so src/native
-	cd lib/day21; python build_day21.py
-	cp build/libday21.so src/native
-	cp lib/day21/day21_cffi.*.so src/native
+	cmake -G Ninja -Bbuild lib -D CMAKE_BUILD_TYPE=Release
+	cmake --build build --target install
 endif
 
 clean:

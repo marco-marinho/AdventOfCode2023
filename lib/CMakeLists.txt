@@ -29,16 +29,26 @@ get_filename_component(DAY21_BIN_ABSOLUTE_PATH ${DAY21_BIN} ABSOLUTE)
 find_package(Python3 COMPONENTS Interpreter)
 get_property(INC_DIRS DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 
+if(UNIX)
+    set(day21_path ${DAY21_BIN_ABSOLUTE_PATH}/day21_cffi.so)
+    set(day21_binary ${DAY21_BIN_ABSOLUTE_PATH})
+endif(UNIX)
+
+if(MSVC)
+    set(day21_path ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG>/day21_cffi.pyd)
+    set(day21_binary ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG>)
+endif(MSVC)
+
 add_custom_command(
     TARGET day21 POST_BUILD
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/build_wrapper.py -I ${INC_DIRS}
-             -L ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG> -O ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG>
+             -L ${day21_binary} -O ${day21_binary}
              -D ${CMAKE_CURRENT_SOURCE_DIR}/day21 -N day21_cffi -l day21
     COMMENT "Generating API wrapper"
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 
 install(
-        FILES $<TARGET_FILE:day21> $<TARGET_FILE:day17_pybind> ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG>/day21_cffi.pyd
+        FILES $<TARGET_FILE:day21> $<TARGET_FILE:day17_pybind> ${day21_path}
         DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../src/native
 )

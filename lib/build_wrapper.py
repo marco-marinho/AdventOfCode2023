@@ -82,3 +82,4 @@ if __name__ == "__main__":
     )
     ffibuilder.compile(tmpdir=args.workingdir, verbose=True,
                        target=str(Path(args.outputdir).joinpath(args.name + suffix)))
+    Path(args.name + ".c").unlink(missing_ok=True)

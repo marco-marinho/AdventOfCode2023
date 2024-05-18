@@ -6,16 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-if (UNIX)
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-    set(CMAKE_C_FLAGS_RELEASE "-O3")
-endif (UNIX)
-
-if (MSVC)
-    set(CMAKE_C_FLAGS_RELEASE "/O2")
-    set(CMAKE_CXX_FLAGS_RELEASE "/O2")
-endif (MSVC)
-
 add_subdirectory(extern/pybind11)
 pybind11_add_module(day17_pybind day17/day17.cpp)
 
@@ -29,15 +19,9 @@ get_filename_component(DAY21_BIN_ABSOLUTE_PATH ${DAY21_BIN} ABSOLUTE)
 find_package(Python3 COMPONENTS Interpreter)
 get_property(INC_DIRS DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 
-if(UNIX)
-    set(day21_path ${DAY21_BIN_ABSOLUTE_PATH}/day21_cffi.so)
-    set(day21_binary ${DAY21_BIN_ABSOLUTE_PATH})
-endif(UNIX)
 
-if(MSVC)
-    set(day21_path ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG>/day21_cffi.pyd)
-    set(day21_binary ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG>)
-endif(MSVC)
+set(day21_path ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG>/day21_cffi.${SO_EXT})
+set(day21_binary ${DAY21_BIN_ABSOLUTE_PATH}/$<CONFIG>)
 
 add_custom_command(
     TARGET day21 POST_BUILD

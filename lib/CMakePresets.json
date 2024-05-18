@@ -9,16 +9,22 @@
     {
       "name": "default",
       "displayName": "Default Config",
-      "description": "Default build using Ninja generator",
-      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build"
     },
     {
-      "name": "ninja-multi",
+      "name": "linux",
       "inherits": "default",
       "displayName": "Ninja Multi-Config",
       "description": "Default build using Ninja Multi-Config generator",
-      "generator": "Ninja Multi-Config"
+      "generator": "Ninja Multi-Config",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
+        "SO_EXT": "so"
+      }
     },
     {
       "name": "windows",
@@ -30,6 +36,9 @@
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "SO_EXT": "pyd"
       }
     }
   ],
@@ -37,13 +46,17 @@
     {
       "name": "default",
       "configurePreset": "default",
-      "configuration": "Release",
-      "targets": ["install"]
+      "targets": ["install"],
+      "configuration": "Release"
     },
     {
       "name": "windows",
       "configurePreset": "windows",
-      "configuration": "Release",
+      "inherits": "default"
+    },
+    {
+      "name": "linux",
+      "configurePreset": "linux",
       "inherits": "default"
     }
   ],
@@ -58,6 +71,19 @@
         {
           "type": "build",
           "name": "windows"
+        }
+      ]
+    },
+        {
+      "name": "linux",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux"
+        },
+        {
+          "type": "build",
+          "name": "linux"
         }
       ]
     }

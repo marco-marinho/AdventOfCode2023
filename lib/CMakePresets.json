@@ -39,6 +39,27 @@
       "configurePreset": "default",
       "configuration": "Release",
       "targets": ["install"]
+    },
+    {
+      "name": "windows",
+      "configurePreset": "windows",
+      "configuration": "Release",
+      "inherits": "default"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "windows",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows"
+        },
+        {
+          "type": "build",
+          "name": "windows"
+        }
+      ]
     }
   ]
 }

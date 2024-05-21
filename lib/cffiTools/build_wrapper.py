@@ -36,25 +36,23 @@ def get_cdefs(cdefs_folders):
 
 if __name__ == "__main__":
 
-    if '.so' in importlib.machinery.EXTENSION_SUFFIXES:
-        suffix = '.so'
-    elif '.pyd' in importlib.machinery.EXTENSION_SUFFIXES:
-        suffix = '.pyd'
-    else:
-        suffix = '.*'
     parser = argparse.ArgumentParser(description='CFFI Wrapper Builder.')
-    parser.add_argument('-L', "--librarydirs", nargs="*",
-                        help='Path to folders containing .so/.lib files to link against',
-                        type=str, default=["."])
+    parser.add_argument('-L', "--librarydirs", type=str, default=["."], nargs="*",
+                        help='Path to folders containing .so/.lib files to link against')
     parser.add_argument('-I', '--includedirs', type=str, default=["includes"],
                         help="Path to folders containing header files to be included", nargs="*")
     parser.add_argument('-N', '--name', type=str, default=None,
-                        help="Path to folders containing header files to be included")
-    parser.add_argument('-W', '--workingdir', type=str, default=".")
-    parser.add_argument("-O", "--outputdir", type=str, default=".")
-    parser.add_argument("-D", "--cdefdirs", type=str, default=["."], nargs="*")
-    parser.add_argument("-l", "--libraries", type=str, default=None, nargs="*")
-    parser.add_argument("-H", "--headers", type=str, default=None, nargs="*")
+                        help="Name of the python module to be generated")
+    parser.add_argument('-W', '--workingdir', type=str, default=".",
+                        help="Working directory, C code will be emitted and compilation will take place in this folder")
+    parser.add_argument("-O", "--outputdir", type=str, default=".",
+                        help="The output directory for the generated Python C extension module")
+    parser.add_argument("-D", "--cdefdirs", type=str, default=["."], nargs="*",
+                        help="Path to the folder containing cdef files to used")
+    parser.add_argument("-l", "--libraries", type=str, default=None, nargs="*",
+                        help="Name of the libraries to be linked in")
+    parser.add_argument("-H", "--headers", type=str, default=None, nargs="*",
+                        help="Name of the header files to be included in the compilation")
     args = parser.parse_args()
 
     ffibuilder.cdef(get_cdefs(args.cdefdirs))
@@ -80,7 +78,4 @@ if __name__ == "__main__":
         library_dirs=args.librarydirs,
         extra_link_args=extralinkargs[sys.platform]
     )
-    ffibuilder.compile(tmpdir=args.workingdir, verbose=True,
-                       target=str(Path(args.outputdir).joinpath(args.name + suffix)))
-    Path(args.name + ".c").unlink(missing_ok=True)
-    Path(args.name + ".o").unlink(missing_ok=True)
+    ffibuilder.compile(tmpdir=args.workingdir)

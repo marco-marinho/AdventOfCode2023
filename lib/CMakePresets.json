@@ -9,7 +9,8 @@
     {
       "name": "default",
       "displayName": "Default Config",
-      "binaryDir": "${sourceDir}/build"
+      "binaryDir": "${sourceDir}/build",
+      "hidden": true
     },
     {
       "name": "linux",
@@ -21,9 +22,6 @@
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Linux"
-      },
-      "cacheVariables": {
-        "SO_EXT": "so"
       }
     },
     {
@@ -36,9 +34,6 @@
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
-      },
-      "cacheVariables": {
-        "SO_EXT": "pyd"
       }
     }
   ],
@@ -47,7 +42,8 @@
       "name": "default",
       "configurePreset": "default",
       "targets": ["install"],
-      "configuration": "Release"
+      "configuration": "Release",
+      "hidden": true
     },
     {
       "name": "windows",

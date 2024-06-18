@@ -11,7 +11,7 @@ def get_libs(lib_folders):
     libs = []
     for folder in map(Path, lib_folders):
         for file in folder.iterdir():
-            if file.suffix in [".dll", ".so"]:
+            if file.suffix in [".dll", ".so", ".a", ".lib"]:
                 libs.append(file.stem.removeprefix("lib"))
     return libs
 

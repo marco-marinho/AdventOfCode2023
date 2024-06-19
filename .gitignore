@@ -5,6 +5,8 @@ test/.pytest_cache
 test/.benchmarks
 /build/
 src/native/*.so
+src/native/*.pyd
 */*/__pycache__
 lib/cmake-build-debug
 lib/cmake-build-release
+lib/build

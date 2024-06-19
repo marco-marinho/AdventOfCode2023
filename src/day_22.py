@@ -15,10 +15,7 @@ class Piece:
     end: np.array
     supporting: list = field(default_factory=list, repr=False)
     supported_by: list = field(default_factory=list, repr=False)
-    hash_id: int = field(default_factory=lambda: next(Piece.counter))
-
-    def __hash__(self):
-        return self.hash_id
+    id: int = field(default_factory=lambda: next(Piece.counter))
 
 
 def parse_piece(istr: str) -> Piece:
@@ -75,18 +72,18 @@ def critical_bricks(data: list[Piece]) -> list[Piece]:
 
 
 def chain_length(target: Piece) -> int:
-    removed = {target.hash_id}
+    removed = {target.id}
     queue = [target]
     visited = set()
     while queue:
         current = queue.pop()
-        if current in visited:
+        if current.id in visited:
             continue
-        visited.add(current)
+        visited.add(current.id)
         for other in current.supporting:
             bisect.insort(queue, other, key=lambda x: -x.end[2])
-        if all([other.hash_id in removed for other in current.supported_by]):
-            removed.add(current.hash_id)
+        if all([other.id in removed for other in current.supported_by]):
+            removed.add(current.id)
     return len(removed) - 1
 
 

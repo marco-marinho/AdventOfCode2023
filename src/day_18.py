@@ -28,8 +28,12 @@ def calculate(steps: list[tuple[str, int]]) -> int:
     return i + b
 
 
-if __name__ == "__main__":
+def main():
     data = get_data("../data/Day18.txt")
     short, long = list(zip(*[parse(line) for line in data]))
     print("Task 01:", calculate(short))
     print("Task 02:", calculate(long))
+
+
+if __name__ == "__main__":
+    main()

@@ -20,7 +20,7 @@ def solve(puzzle: str, solutions: tuple[int], blocked: bool) -> int:
             return 0
         case "#", False:
             if "." not in puzzle[: solutions[0]]:
-                return solve(puzzle[solutions[0] :], solutions[1:], True)
+                return solve(puzzle[solutions[0]:], solutions[1:], True)
             else:
                 return 0
         case ".", _:
@@ -30,12 +30,12 @@ def solve(puzzle: str, solutions: tuple[int], blocked: bool) -> int:
         case "?", False:
             acc = 0
             if "." not in puzzle[: solutions[0]]:
-                acc += solve(puzzle[solutions[0] :], solutions[1:], True)
+                acc += solve(puzzle[solutions[0]:], solutions[1:], True)
             acc += solve(puzzle[1:], solutions, False)
             return acc
 
 
-if __name__ == "__main__":
+def main():
     data = util.get_data("../data/Day12.txt")
     puzzles, solutions = zip(*[parts for line in data for parts in [line.split(" ")]])
     solutions = list(map(parse_solution, solutions))
@@ -50,3 +50,7 @@ if __name__ == "__main__":
         res = solve("?".join([a] * 5), tuple(b * 5), False)
         acc += res
     print("Task 02:", acc)
+
+
+if __name__ == "__main__":
+    main()

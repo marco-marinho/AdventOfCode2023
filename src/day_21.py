@@ -5,6 +5,7 @@ from util import get_data
 
 try:
     from native.day21_cffi import lib, ffi
+
     native = True
 except ImportError:
     native = False
@@ -34,7 +35,7 @@ def step(iboard, ref_board, times):
     return output
 
 
-if __name__ == "__main__":
+def main():
     data = get_data("../data/Day21.txt")
     board = np.array([[parse_to_int(entry) for entry in line] for line in data], dtype=np.uint32)
     board = np.tile(board, (5, 5))
@@ -55,3 +56,7 @@ if __name__ == "__main__":
     targets = [65 - 1, 65 + 131 - 1, 65 - 1 + 131 * 2]
     poly_coefficients = np.polyfit(*zip(*[(i, element) for i, element in enumerate(results[targets])]), 2)
     print("Task 02:", int(np.round(np.polyval(poly_coefficients, 26501365 // 131))))
+
+
+if __name__ == "__main__":
+    main()

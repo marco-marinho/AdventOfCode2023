@@ -72,6 +72,10 @@ def task(task_num: int):
     return sum(score)
 
 
-if __name__ == "__main__":
+def main():
     print("Task 01:", task(1))
     print("Task 02:", task(2))
+
+
+if __name__ == "__main__":
+    main()

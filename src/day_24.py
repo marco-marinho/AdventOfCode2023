@@ -44,10 +44,14 @@ def task_02(data: list[tuple[NDArray[np.float64], NDArray[np.float64]]]):
     return int(np.sum(ans))
 
 
-if __name__ == "__main__":
+def main():
     lines = get_data("../data/Day24.txt")
     data = [(np.fromstring(first, sep=",", dtype=np.float64), np.fromstring(second, sep=",", dtype=np.float64))
             for line in lines
             for first, second in [line.split("@")]]
     print("Task 01:", task_01(data))
     print("Task 02:", task_02(data))
+
+
+if __name__ == "__main__":
+    main()

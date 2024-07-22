@@ -55,7 +55,7 @@ def valid(entry: tuple[int, int, int, int], acceptable: list[tuple[range, range,
     return any([x in xt and m in mt and a in at and s in st for xt, mt, at, st in acceptable])
 
 
-if __name__ == "__main__":
+def main():
     data = get_data("../data/Day19.txt")
 
     tree, entries = [list(entries) for k, entries in groupby(data, key=lambda x: x == "") if not k]
@@ -70,3 +70,7 @@ if __name__ == "__main__":
     possibilities = sum(calc_possibilities(entry) for entry in accept)
     print("Task 01:", rating)
     print("Task 02:", possibilities)
+
+
+if __name__ == "__main__":
+    main()

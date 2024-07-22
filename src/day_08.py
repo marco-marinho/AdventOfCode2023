@@ -23,7 +23,11 @@ def run(commands, instructions):
     return steps[states.index("AAA")], np.lcm.reduce(steps, dtype=np.uint64)
 
 
-if __name__ == "__main__":
+def main():
     first, second = run(*parse())
     print("Task 01:", first)
     print("Task 02:", second)
+
+
+if __name__ == "__main__":
+    main()

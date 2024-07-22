@@ -50,7 +50,7 @@ def get_loop(idata: list[str], start_pos: Point, start_direction: Point):
     return visited, edges
 
 
-if __name__ == "__main__":
+def main():
     data = get_data("../data/Day10.txt")
     start_pos = Point.from_iterable(find_start(data))
     directions = [Point(0, 1), Point(0, -1), Point(-1, 0), Point(1, 0)]
@@ -66,3 +66,7 @@ if __name__ == "__main__":
             i = abs(A2) // 2 - b + 1
             print("Task 02:", i)
             break
+
+
+if __name__ == "__main__":
+    main()

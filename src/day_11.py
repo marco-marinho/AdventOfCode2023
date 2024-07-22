@@ -23,6 +23,10 @@ def calculate_distance(rate):
     return sum(distances)
 
 
-if __name__ == "__main__":
+def main():
     print("Task 01:", calculate_distance(2))
     print("Task 02:", calculate_distance(1000000))
+
+
+if __name__ == "__main__":
+    main()

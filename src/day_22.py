@@ -87,7 +87,7 @@ def chain_length(target: Piece) -> int:
     return len(removed) - 1
 
 
-if __name__ == "__main__":
+def main():
     data = [parse_piece(entry) for entry in get_data("../data/Day22.txt")]
     settled = drop(data)
     connect_bricks(settled)
@@ -95,3 +95,7 @@ if __name__ == "__main__":
     print("Task 01:", len(settled) - len(non_removable))
     chain = map(chain_length, settled)
     print("Task 02:", sum(chain))
+
+
+if __name__ == "__main__":
+    main()

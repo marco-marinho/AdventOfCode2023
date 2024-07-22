@@ -104,6 +104,10 @@ def task_02():
     return np.lcm.reduce(cycles, dtype=np.uint64)
 
 
-if __name__ == "__main__":
+def main():
     print("Task 1:", task_01())
     print("Task 2:", task_02())
+
+
+if __name__ == "__main__":
+    main()

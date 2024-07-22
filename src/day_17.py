@@ -4,9 +4,11 @@ import numpy as np
 
 try:
     from native.day17_pybind import native_djikstras
+
     native = True
 except ImportError:
     import multiprocessing as mp
+
     native = False
 
 from util import get_data
@@ -44,7 +46,7 @@ def dijkstras(iboard: np.array, imin: int, imax: int):
     return -1
 
 
-if __name__ == "__main__":
+def main():
     data = get_data("../data/Day17.txt")
     board = np.array([list(line) for line in data], dtype=np.uint64)
     if native:
@@ -55,3 +57,7 @@ if __name__ == "__main__":
             result = p.starmap(dijkstras, [(board, 1, 3), (board, 4, 10)])
         print("Task 01:", result[0])
         print("Task 02:", result[1])
+
+
+if __name__ == "__main__":
+    main()

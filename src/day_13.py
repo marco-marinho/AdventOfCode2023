@@ -24,7 +24,7 @@ def get_points(block: NDArray[int], max_residual: int = 0) -> int:
     return find_reflection(block.T, max_residual)
 
 
-if __name__ == "__main__":
+def main():
     data = get_data("../data/Day13.txt")
     blocks = [
         np.array([list(b.replace(".", "0").replace("#", "1")) for b in block], dtype=np.int8)
@@ -35,3 +35,7 @@ if __name__ == "__main__":
     points_2 = sum(get_points(block, 1) for block in blocks)
     print("Task 1:", points_1)
     print("Task 2:", points_2)
+
+
+if __name__ == "__main__":
+    main()

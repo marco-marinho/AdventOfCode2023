@@ -63,7 +63,7 @@ def traverse(current: Node, target: Node, visited: list[int], cost: int):
         visited[neighbor.id] = 0
 
 
-if __name__ == "__main__":
+def main():
     board = get_board("../data/Day23.txt", fill="#")
     end = (board.shape[0] - 2, board.shape[1] - 3)
     node_set = {(1, 2): Node((1, 2)), end: Node(end)}
@@ -88,3 +88,7 @@ if __name__ == "__main__":
     t1 = max(traverse(node_set[(1, 2)], end_node, visited, 0))
     print("Task 01:", t1)
     print("Task 02:", t2)
+
+
+if __name__ == "__main__":
+    main()

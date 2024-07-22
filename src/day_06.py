@@ -19,7 +19,7 @@ def parse_02() -> list[int]:
 
 
 def solve(b: int, c: int) -> tuple[float, float]:
-    delta = np.sqrt(b**2 - 4 * c)
+    delta = np.sqrt(b ** 2 - 4 * c)
     return (b - delta) / 2, (b + delta) / 2
 
 
@@ -44,6 +44,10 @@ def task_02() -> int:
     return int(s - f + 1)
 
 
-if __name__ == "__main__":
+def main():
     print("Task 01:", task_01())
     print("Task 02:", task_02())
+
+
+if __name__ == "__main__":
+    main()

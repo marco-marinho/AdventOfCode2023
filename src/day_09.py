@@ -22,8 +22,12 @@ def interpolate(idata: list[int]) -> tuple[int, int]:
     return sum(end_vals), reduce(lambda a, b: b - a, start_vals[::-1])
 
 
-if __name__ == "__main__":
+def main():
     lines = parse()
     t1, t2 = list(zip(*[interpolate(entry) for entry in lines]))
     print("Task 01:", sum(t1))
     print("Task 02:", sum(t2))
+
+
+if __name__ == "__main__":
+    main()

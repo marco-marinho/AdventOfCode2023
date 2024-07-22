@@ -57,8 +57,12 @@ def task_02(data):
     return calc_load(cdata)
 
 
-if __name__ == "__main__":
+def main():
     data = get_board("../data/Day14.txt")
     data = data[1:-1, 1:-1]
     print("Task 1:", task_01(data))
     print("Task 2:", task_02(data))
+
+
+if __name__ == "__main__":
+    main()

@@ -22,7 +22,11 @@ def task_2(data: list[str]) -> int:
     return sum((key + 1) * (idx + 1) * val for key in boxes for idx, val in enumerate(boxes[key].values()))
 
 
-if __name__ == "__main__":
+def main():
     data = get_data("../data/Day15.txt")[0].split(",")
     print("Task 01:", task_1(data))
     print("Task 02:", task_2(data))
+
+
+if __name__ == "__main__":
+    main()

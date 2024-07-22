@@ -36,7 +36,7 @@ def run_once(pos: Point, mov: Point, board: np.ndarray) -> int:
     return np.count_nonzero(unique)
 
 
-if __name__ == "__main__":
+def main():
     board = get_board("../data/Day16.txt")
     board = board[1:-1, 1:-1]
     print("Task 01:", run_once(Point(0, 0), Point(0, 1), board))
@@ -52,3 +52,7 @@ if __name__ == "__main__":
             [(Point(board.shape[0] - 1, y), Point(-1, 0), board) for y in range(board.shape[1])],
         )
     print("Task 02:", max(left + right + top + bottom))
+
+
+if __name__ == "__main__":
+    main()
